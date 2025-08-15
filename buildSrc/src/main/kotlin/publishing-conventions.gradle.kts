@@ -92,14 +92,13 @@ val testRepositoryDir = project.layout.buildDirectory.dir("testRepository")
 
 publishing {
     repositories {
-        addSonatypeRepository()
-
-        /**
-         * Maven repository in build directory to check published artifacts.
-         */
         maven {
-            setUrl(testRepositoryDir)
-            name = "test"
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/VIER-CognitiveVoice/kotlinx.serialization")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+            }
         }
     }
 }
